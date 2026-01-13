@@ -37,8 +37,8 @@ def detect_intent(state: AgentState):
 
     Classify the user message into ONE of these intents:
     - greeting
-    - pricing ( if asked about pricing, plans or costs )
-    - high_intent( if user shows strong interest in buying or signing up for a service or said about basic and pro plans)
+    - pricing ( if asked about pricing, plans,plan details or costs )
+    - high_intent( if user shows strong interest in buying or signing up for a service or said about basic and pro plans or numeric values of 1,2,3 etc)
     - unknown
 
     User message: "{state['user_message']}"
@@ -95,6 +95,19 @@ def answer_from_knowledge(state: AgentState):
 
 def mock_lead_capture(name, email, platform):
     print(f"Lead captured successfully: {name}, {email}, {platform}")
+    # In real scenario, integrate with CRM or database here.
+    # reinitialize state after lead capture
+    state = {
+        "user_message": "",
+        "intent": "",
+        "name": "",
+        "email": "",
+        "platform": "",
+        "requested_field": "",
+        "response": ""
+    }
+
+
 
 
 def extract_user_details(state: AgentState):
@@ -154,7 +167,7 @@ def ask_lead_details(state: AgentState):
     )
 
     state["requested_field"] = ""
-    state["response"] = f"Thanks {state['name']}! Your details have been captured successfully."
+    state["response"] = f"Thanks {state['name']}! Your details have been captured successfully. We will reach out to you soon. Have a great day!"
     return state
 
 
